@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<head>
+  <style>
+    body {
+      background-color: gainsboro;
+      font-family: Helvetica, Arial, sans-serif;
+      font-size: x-large;
+    }
+
+    #container {
+      margin: 10px auto;
+      text-align: center;
+    }
+
+    #container-needed {
+      font-size: xx-large;
+      padding: 20px 0;
+      text-decoration: underline;
+    }
+
+    input[type="range"] {
+      padding: 10px 0;
+      transform: scale(1.4);
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <div id="container-needed">
+      Users needed: <span id="jsLabelCustomers"></span>
+    </div>
+
+    <div>
+      <label for="jsSliderMRRGoal">
+        MRR Goal $<span id="jsLabelMRRGoal"></span>
+      </label>
+
+      <br>
+
+      <input
+        type="range"
+        id="jsSliderMRRGoal"
+        value="10000"
+        step="10"
+        min="1000"
+        max="20000"
+      />
+
+    </div>
+
+    <div>
+      <label for="jsSliderMonthlyCharge">
+        Monthly Charge $<span id="jsLabelMonthlyCharge"></span>
+      </label>
+
+      <br>
+
+      <input
+        type="range"
+        id="jsSliderMonthlyCharge"
+        value="10"
+        step="1"
+        min="1"
+        max="100"
+      />
+    </div>
+  </div>
+
+  <script>
+    const $sliderMRRGoal = document.getElementById('jsSliderMRRGoal');
+    const $labelMRRGoal = document.getElementById('jsLabelMRRGoal');
+    const $sliderMonthlyCharge = document.getElementById('jsSliderMonthlyCharge');
+    const $labelMonthlyCharge = document.getElementById('jsLabelMonthlyCharge');
+    const $labelCustomers = document.getElementById('jsLabelCustomers');
+
+    const labelsUpdate = () => {
+      $labelMRRGoal.textContent = formatNumber($sliderMRRGoal.value);
+      $labelMonthlyCharge.textContent = formatNumber($sliderMonthlyCharge.value);
+      $labelCustomers.textContent = formatNumber(Math.ceil($sliderMRRGoal.value / $sliderMonthlyCharge.value));
+    };
+
+    const formatNumber = (number) => {
+      return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    };
+
+    $sliderMRRGoal.addEventListener('input', labelsUpdate);
+    $sliderMonthlyCharge.addEventListener('input', labelsUpdate);
+
+    labelsUpdate();
+  </script>
+</body>
