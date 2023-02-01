@@ -25,13 +25,18 @@
     }
 
     #container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
       margin: 10px auto;
       text-align: center;
+      min-height: 100vh;
     }
 
     #container-needed {
+      padding-bottom: 60px;
       font-size: xx-large;
-      padding: 20px 0;
       text-decoration: underline;
     }
 
@@ -81,6 +86,24 @@
         max="100"
       />
     </div>
+
+    <div>
+      <label for="jsSliderTeamSize">
+        Team Size <span id="jsLabelTeamSize"></span>
+      </label>
+
+      <br>
+
+      <input
+        type="range"
+        id="jsSliderTeamSize"
+        value="1"
+        step="1"
+        min="1"
+        max="4"
+      />
+    </div>
+
   </div>
 
   <script>
@@ -88,12 +111,15 @@
     const $labelMRRGoal = document.getElementById('jsLabelMRRGoal');
     const $sliderMonthlyCharge = document.getElementById('jsSliderMonthlyCharge');
     const $labelMonthlyCharge = document.getElementById('jsLabelMonthlyCharge');
+    const $sliderTeamSize = document.getElementById('jsSliderTeamSize');
+    const $labelTeamSize = document.getElementById('jsLabelTeamSize');
     const $labelCustomers = document.getElementById('jsLabelCustomers');
 
     const labelsUpdate = () => {
       $labelMRRGoal.textContent = formatNumber($sliderMRRGoal.value);
       $labelMonthlyCharge.textContent = formatNumber($sliderMonthlyCharge.value);
-      $labelCustomers.textContent = formatNumber(Math.ceil($sliderMRRGoal.value / $sliderMonthlyCharge.value));
+      $labelTeamSize.textContent = formatNumber($sliderTeamSize.value);
+      $labelCustomers.textContent = formatNumber(Math.ceil($sliderMRRGoal.value / $sliderMonthlyCharge.value * $sliderTeamSize.value));
     };
 
     const formatNumber = (number) => {
@@ -102,6 +128,7 @@
 
     $sliderMRRGoal.addEventListener('input', labelsUpdate);
     $sliderMonthlyCharge.addEventListener('input', labelsUpdate);
+    $sliderTeamSize.addEventListener('input', labelsUpdate);
 
     labelsUpdate();
   </script>
